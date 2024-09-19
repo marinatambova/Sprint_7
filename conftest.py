@@ -1,5 +1,3 @@
-# conftest.py
-
 import pytest
 from utils import create_courier, login_courier, delete_courier
 

@@ -1,5 +1,3 @@
-# data.py
-
 from generate_random_string import generate_random_string
 
 def get_courier_payload(login=None, password=None, first_name=None):

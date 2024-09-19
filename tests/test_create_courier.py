@@ -1,5 +1,3 @@
-# test_create_courier.py
-
 import pytest
 import requests
 from config import BASE_URL, CREATE_COURIER_ENDPOINT

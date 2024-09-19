@@ -1,5 +1,3 @@
-# utils.py
-
 import requests
 from config import (BASE_URL, CREATE_COURIER_ENDPOINT, LOGIN_COURIER_ENDPOINT,
                     DELETE_COURIER_ENDPOINT, CREATE_ORDER_ENDPOINT)

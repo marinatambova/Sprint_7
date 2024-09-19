@@ -1,5 +1,3 @@
-# generate_random_string.py
-
 import random
 import string
 

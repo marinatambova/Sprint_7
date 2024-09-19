@@ -1,5 +1,3 @@
-# test_get_orders_list.py
-
 import pytest
 import requests
 from config import BASE_URL, GET_ORDERS_ENDPOINT

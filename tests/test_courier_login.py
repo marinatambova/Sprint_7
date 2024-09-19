@@ -1,5 +1,3 @@
-# test_courier_login.py
-
 import pytest
 import requests
 from config import BASE_URL, LOGIN_COURIER_ENDPOINT
