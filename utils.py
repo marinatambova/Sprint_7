@@ -1,42 +1,48 @@
+# utils.py
+
 import requests
-import random
-import string
+from config import (BASE_URL, CREATE_COURIER_ENDPOINT, LOGIN_COURIER_ENDPOINT,
+                    DELETE_COURIER_ENDPOINT, CREATE_ORDER_ENDPOINT)
+from generate_random_string import generate_random_string
 
-BASE_URL = 'https://qa-scooter.praktikum-services.ru'
+def create_courier(login=None, password=None, first_name=None):
+    """Создаёт курьера с указанными данными или случайно сгенерированными."""
+    if login is None:
+        login = generate_random_string()
+    if password is None:
+        password = generate_random_string()
+    if first_name is None:
+        first_name = generate_random_string()
 
-def generate_random_string(length=10):
-    """Генерирует случайную строку из букв нижнего регистра."""
-    letters = string.ascii_lowercase
-    return ''.join(random.choice(letters) for _ in range(length))
-
-def create_courier():
-    """Создаёт нового курьера и возвращает его данные."""
-    login = generate_random_string()
-    password = generate_random_string()
-    first_name = generate_random_string()
-
+    url = BASE_URL + CREATE_COURIER_ENDPOINT
     payload = {
         "login": login,
         "password": password,
         "firstName": first_name
     }
 
-    response = requests.post(f'{BASE_URL}/api/v1/courier', json=payload)
-    if response.status_code == 201:
-        return {
-            "login": login,
-            "password": password,
-            "firstName": first_name
-        }
-    else:
-        print(f"Не удалось создать курьера: {response.status_code}, {response.text}")
-        return None
+    response = requests.post(url, json=payload)
+    return response, payload  # Возвращаем ответ и payload для дальнейшего использования
+
+def login_courier(login, password):
+    """Авторизует курьера и возвращает ответ сервера."""
+    url = BASE_URL + LOGIN_COURIER_ENDPOINT
+    payload = {
+        "login": login,
+        "password": password
+    }
+
+    response = requests.post(url, json=payload)
+    return response
 
 def delete_courier(courier_id):
     """Удаляет курьера по его ID."""
-    response = requests.delete(f'{BASE_URL}/api/v1/courier/{courier_id}')
-    if response.status_code == 200:
-        return True
-    else:
-        print(f"Не удалось удалить курьера: {response.status_code}, {response.text}")
-        return False
+    url = BASE_URL + DELETE_COURIER_ENDPOINT.format(courier_id=courier_id)
+    response = requests.delete(url)
+    return response
+
+def create_order(order_data):
+    """Создаёт заказ с указанными данными."""
+    url = BASE_URL + CREATE_ORDER_ENDPOINT
+    response = requests.post(url, json=order_data)
+    return response
